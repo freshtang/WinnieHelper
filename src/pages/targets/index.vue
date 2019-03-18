@@ -59,8 +59,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang=scss>
+@import '../../utils/styles/vars.sass';
 
 /* list */
 .main-warp {
@@ -82,12 +82,12 @@ export default {
 
 .target-list-content .icon-right{
   font-size: 24px;
-  color: #ffc200;
+  color: $primary-color;
 }
 .target-list-content .target-icon {
   margin-right: 25px;
   font-size: 34px;
-  color: #ffc200;
+  color: $primary-color;
 }
 
 .target-list-content .content {
@@ -100,7 +100,7 @@ export default {
 }
 
 .target-list-content .content .punch-day-content {
-  color: #ffc200;
+  color: $primary-color;
 }
 
 .target-list-content .content .content-text {
@@ -112,8 +112,8 @@ export default {
 }
 
 .add-target .weui-btn {
-  color: #ffc200;
-  border:1px solid #ffc200;
+  color: $primary-color;
+  border:1px solid $primary-color;
   width: 130px;
   font-size: 14px;
   border-radius: 14px;

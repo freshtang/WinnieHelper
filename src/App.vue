@@ -32,10 +32,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang=scss>
+
+@import './utils/styles/vars.sass';
 
 /*
-main color #ffc200
+main color $primary-color
 font color #888
 */
 
@@ -44,8 +46,8 @@ font color #888
   background-color: #f8f8f8;
 }
 .weui-btn {
-  color: #ffc200;
-  border:1px solid #ffc200;
+  color: $primary-color;
+  border:1px solid $primary-color;
 }
 
 /* icon */
