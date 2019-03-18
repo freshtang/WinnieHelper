@@ -10,6 +10,8 @@
       </div>
     </div>
 
+    <button class="weui-btn" type="primary">页面主操作 Normal</button>
+
     <div class="usermotto">
       <div class="user-motto">
         <card :text="motto"></card>
