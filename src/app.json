@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/targets/main",
+    "pages/targetManage/main",
     "pages/index/main",
     "pages/logs/main",
     "pages/counter/main"

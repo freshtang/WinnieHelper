@@ -1,8 +1,23 @@
 <script>
+import { mapActions } from 'vuex'
+
 import 'mp-weui/lib/style.css'
 
 export default {
+  methods: {
+    ...mapActions({
+      getUserInfo: 'userInfo/getUserInfo'
+    })
+  },
   created () {
+    this.getUserInfo()
+    if (!wx.cloud) {
+      console.error('请使用 2.2.3 或以上的基础库以使用云能力')
+    } else {
+      wx.cloud.init({
+        traceUser: true
+      })
+    }
     // 调用API从本地缓存中获取数据
     /*
      * 平台 api 差异的处理方式:  api 方法统一挂载到 mpvue 名称空间, 平台判断通过 mpvuePlatform 特征字符串

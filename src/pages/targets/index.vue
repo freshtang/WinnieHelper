@@ -1,9 +1,9 @@
 <template>
-  <div class="main-warp" @click="clickHandle">
+  <div class="main-warp">
     <div class="target-list-wrap" >
       <div class="target-list-content">
         <div class="weui-cells weui-cells_after-title">
-          <navigator :key="item.name" v-for="item in targetList" url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <navigator :key="item._openid" v-for="item in targetList" url="/pages/targetManage/main" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <text :class="[item.className, 'iconfont target-icon weui-cell__hd']"></text>
             <div class="weui-cell__bd content">
               <text class="content-text">{{item.name}}</text>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="add-target">
-        <button class="weui-btn" type="primary" plain="true">
+        <button class="weui-btn" type="primary" plain="true" @click="toAddTarget">
           <text>添加目标</text>
           <!-- <text class="iconfont icon-winnie"></text> -->
         </button>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import card from '@/components/card'
 
 export default {
@@ -32,11 +33,13 @@ export default {
       targetList: [{
         name: '早起',
         className: 'icon-sun',
-        punchDay: 3
+        punchDay: 3,
+        _openid: '1'
       }, {
         name: '吃早餐',
         className: 'icon-eat',
-        punchDay: 3
+        punchDay: 3,
+        _openid: '2'
       }],
       motto: 'Hello miniprograme'
     }
@@ -46,10 +49,15 @@ export default {
     card
   },
 
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
+  },
+
   methods: {
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
+    toAddTarget () {
+      wx.navigateTo({url: '/pages/targetManage/main'})
     }
   },
 
