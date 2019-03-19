@@ -3,13 +3,13 @@
     <div class="target-list-wrap" >
       <div class="target-list-content">
         <div class="weui-cells weui-cells_after-title">
-          <navigator :key="item._openid" v-for="item in targetList" url="/pages/targetManage/main" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <navigator :key="item._openid" v-for="item in targetsLists" url="/pages/targetManage/main" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <text :class="[item.className, 'iconfont target-icon weui-cell__hd']"></text>
             <div class="weui-cell__bd content">
               <text class="content-text">{{item.name}}</text>
               <text class="punch-day-wrap content-text"> 已经打卡<text class="punch-day-content">{{item.punchDay}}</text>天</text>
             </div>
-            <text :class="['iconfont', ifcheck(item.lastCheck) ? 'icon-right' : 'icon-allright']"></text>
+            <text :class="[item.lastCheck === curDate? 'icon-allright' : 'icon-right', 'iconfont', 'icon-normal']"></text>
           </navigator>
         </div>
       </div>
@@ -24,27 +24,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { formatDate } from '@/utils'
+import { mapState, mapActions } from 'vuex'
+// import { formatDate } from '@/utils'
 import card from '@/components/card'
 
 export default {
   data () {
     return {
       curDate: '2019-03-19',
-      targetList: [{
-        name: '早起',
-        className: 'icon-sun',
-        punchDay: 3,
-        _openid: '1',
-        lastCheck: '2019-03-19'
-      }, {
-        name: '吃早餐',
-        className: 'icon-eat',
-        punchDay: 3,
-        _openid: '2',
-        lastCheck: '2019-03-18'
-      }],
+      // targetList: [{
+      //   name: '早起',
+      //   className: 'icon-sun',
+      //   punchDay: 3,
+      //   _openid: '1',
+      //   lastCheck: '2019-03-19'
+      // }, {
+      //   name: '吃早餐',
+      //   className: 'icon-eat',
+      //   punchDay: 3,
+      //   _openid: '2',
+      //   lastCheck: '2019-03-18'
+      // }],
       motto: 'Hello miniprograme'
     }
   },
@@ -55,28 +55,23 @@ export default {
 
   computed: {
     ...mapState({
-      userInfo: state => state.userInfo
+      userInfo: state => state.userInfo,
+      targetsLists: state => state.targets.targetsLists
     })
   },
 
   methods: {
+    ...mapActions({
+      loadTargets: 'targets/loadTargets'
+    }),
     toAddTarget () {
       wx.navigateTo({url: '/pages/targetManage/main'})
-    },
-    ifcheck (lastCheck) {
-      console.log('lastCheck' + lastCheck)
-      console.log('curDate' + this.curDate)
-      console.log(lastCheck === this.curDate)
-      return lastCheck === this.curDate
     }
   },
 
   created () {
+    this.loadTargets()
     // let app = getApp()
-    console.log(this.targetList[0].lastCheck.slice(0, 10))
-    console.log(this.targetList[1].lastCheck.slice(0, 10))
-    this.curDate = formatDate(new Date())
-    console.log(this.curDate)
   }
 }
 </script>
@@ -102,7 +97,7 @@ export default {
   flex: 1;
 }
 
-.target-list-content .icon-right{
+.target-list-content .icon-normal{
   font-size: 24px;
   color: $primary-color;
 }

@@ -1,4 +1,5 @@
 const addTarget = async (data) => {
+  console.log(data)
   return await wx.cloud.callFunction({  // eslint-disable-line
     name: 'addTarget',
     data: data

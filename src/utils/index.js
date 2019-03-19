@@ -28,6 +28,24 @@ export function formatDate (date) {
   return `${t1}`
 }
 
+export const defaultTargetsLists = [{
+  targetId: 1,
+  name: '早起',
+  className: 'icon-sun',
+  color: 'primary',
+  punchDay: 0,
+  lastCheck: 0,
+  desc: '一日之计在于晨'
+}, {
+  targetId: 2,
+  name: '吃早餐',
+  className: 'icon-eat',
+  color: 'primary',
+  punchDay: 0,
+  lastCheck: 0,
+  desc: '你需要一顿健康的早餐来激发能量，让你的大脑正常运转。'
+}]
+
 export default {
   formatNumber,
   formatTime,

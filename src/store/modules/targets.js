@@ -11,7 +11,7 @@ export default {
     color: '',
     desc: '',
     _openid: '',
-    targetsList: []
+    targetsLists: []
   },
   mutations: {
     SET_TARGET_INFO (state, payload) {
@@ -20,6 +20,7 @@ export default {
   },
   actions: {
     async addTarget ({ commit, state }, params) {
+      console.log(params)
       // 添加target
       const { result } = await apis.targets.addTarget(params)
 
@@ -28,11 +29,21 @@ export default {
         const { result } = await apis.targets.queryTargets()
         console.log(result)
         if (result.errMsg === 'collection.get:ok') {
-          commit('SET_USER_INFO', {...state, targetsList: result.data})
+          commit('SET_TARGET_INFO', {...state, targetsLists: result.data})
           return true
         } else {
           return false
         }
+      } else {
+        return false
+      }
+    },
+    async loadTargets ({ commit, state }, params) {
+      const { result } = await apis.targets.queryTargets()
+      console.log(result)
+      if (result.errMsg === 'collection.get:ok') {
+        commit('SET_TARGET_INFO', {...state, targetsLists: result.data})
+        return true
       } else {
         return false
       }

@@ -5,14 +5,14 @@
         <text class="target-title">全部目标</text>
       </div>
       <div class="target-list-content">
-          <navigator :key="item._openid" v-for="item in targetList" class="target-card">
+          <navigator :key="item._openid" v-for="item in defaultTargetsLists" class="target-card">
             <!-- <text :class="[item.className, 'iconfont target-icon weui-cell__hd']"></text> -->
             <div class="img-container">
               <img class="target-card-img" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl"/>
             </div>
             <div class="content-container">
               <text class="card-content">{{item.name}}</text>
-              <text @click.stop="addSelectTarget" class="iconfont normal-icon icon-add"></text>
+              <text @click.stop="addSelectTarget(item)" class="iconfont normal-icon icon-add"></text>
             </div>
           </navigator>
       </div>
@@ -22,28 +22,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { defaultTargetsLists } from '@/utils'
 import card from '@/components/card'
 
 export default {
   data () {
     return {
-      targetList: [{
-        targetId: 1,
-        name: '早起',
-        className: 'icon-sun',
-        color: 'primary',
-        punchDay: 0,
-        lastCheck: new Date(0),
-        desc: '一日之计在于晨'
-      }, {
-        targetId: 2,
-        name: '吃早餐',
-        className: 'icon-eat',
-        color: 'primary',
-        punchDay: 0,
-        lastCheck: new Date(0),
-        desc: '你需要一顿健康的早餐来激发能量，让你的大脑正常运转。'
-      }]
+      defaultTargetsLists: defaultTargetsLists
     }
   },
 
@@ -61,9 +46,12 @@ export default {
     ...mapActions({
       addTarget: 'targets/addTarget'
     }),
-    addSelectTarget (target, ev) {
+    addSelectTarget (target) {
       console.log(target)
-      console.log(ev)
+      this.addTarget(target)
+        .then(res => {
+          console.log(res)
+        })
     }
   },
 
