@@ -9,7 +9,7 @@
               <text class="content-text">{{item.name}}</text>
               <text class="punch-day-wrap content-text"> 已经打卡<text class="punch-day-content">{{item.punchDay}}</text>天</text>
             </div>
-            <text class="iconfont icon-right"></text>
+            <text :class="['iconfont', ifcheck(item.lastCheck) ? 'icon-right' : 'icon-allright']"></text>
           </navigator>
         </div>
       </div>
@@ -25,21 +25,25 @@
 
 <script>
 import { mapState } from 'vuex'
+import { formatDate } from '@/utils'
 import card from '@/components/card'
 
 export default {
   data () {
     return {
+      curDate: '2019-03-19',
       targetList: [{
         name: '早起',
         className: 'icon-sun',
         punchDay: 3,
-        _openid: '1'
+        _openid: '1',
+        lastCheck: '2019-03-19'
       }, {
         name: '吃早餐',
         className: 'icon-eat',
         punchDay: 3,
-        _openid: '2'
+        _openid: '2',
+        lastCheck: '2019-03-18'
       }],
       motto: 'Hello miniprograme'
     }
@@ -58,11 +62,21 @@ export default {
   methods: {
     toAddTarget () {
       wx.navigateTo({url: '/pages/targetManage/main'})
+    },
+    ifcheck (lastCheck) {
+      console.log('lastCheck' + lastCheck)
+      console.log('curDate' + this.curDate)
+      console.log(lastCheck === this.curDate)
+      return lastCheck === this.curDate
     }
   },
 
   created () {
     // let app = getApp()
+    console.log(this.targetList[0].lastCheck.slice(0, 10))
+    console.log(this.targetList[1].lastCheck.slice(0, 10))
+    this.curDate = formatDate(new Date())
+    console.log(this.curDate)
   }
 }
 </script>
