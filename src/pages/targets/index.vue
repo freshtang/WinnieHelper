@@ -79,7 +79,7 @@ export default {
 
 .target-list-wrap {
   height: 100%;
-  box-shadow: #888 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px;
   display: flex;
   flex-direction: column;
 }

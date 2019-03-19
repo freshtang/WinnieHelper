@@ -3,14 +3,14 @@
 
     <div class="userinfo" @click="bindViewTap">
       <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <!-- <img class="userinfo-avatar" src="/static/images/user.png" background-size="cover" /> -->
+      <img class="userinfo-avatar" v-else src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=f2c9d5bcf61f3a295ec8d2cca924bce3/f9dcd100baa1cd110c160642bf12c8fcc3ce2d2b.jpg" background-size="cover" />
 
       <div class="userinfo-nickname">
         <card :text="userInfo.nickName"></card>
       </div>
     </div>
 
-    <button class="weui-btn" type="primary">页面主操作 Normal</button>
+    <!-- <button class="weui-btn" type="primary">页面主操作 Normal</button>
 
     <div class="usermotto">
       <div class="user-motto">
@@ -31,22 +31,29 @@
         </div>
         <div class="right">
         </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import card from '@/components/card'
+import { mapState } from 'vuex'
 
 export default {
   data () {
     return {
-      motto: 'Hello miniprograme',
-      userInfo: {
-        nickName: '' + '撒哟啦啦',
-        avatarUrl: 'https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=f2c9d5bcf61f3a295ec8d2cca924bce3/f9dcd100baa1cd110c160642bf12c8fcc3ce2d2b.jpg'
-      }
+      motto: 'Hello miniprograme'
+      // userInfo: {
+      //   nickName: '' + '撒哟啦啦',
+      //   avatarUrl: 'https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=f2c9d5bcf61f3a295ec8d2cca924bce3/f9dcd100baa1cd110c160642bf12c8fcc3ce2d2b.jpg'
+      // }
     }
+  },
+
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
   },
 
   components: {

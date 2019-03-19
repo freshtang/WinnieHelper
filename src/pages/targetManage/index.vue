@@ -1,6 +1,5 @@
 <template>
   <div class="main-warp">
-
     <div class="target-list-wrap" >
       <div class="target-header">
         <text class="target-title">全部目标</text>
@@ -12,8 +11,8 @@
               <img class="target-card-img" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl"/>
             </div>
             <div class="content-container">
-              <text class="card-content">name</text>
-              <text class="iconfont normal-icon icon-right"></text>
+              <text class="card-content">{{item.name}}</text>
+              <text class="iconfont normal-icon icon-add"></text>
             </div>
           </navigator>
       </div>
@@ -98,6 +97,7 @@ export default {
     justify-content: space-between;
     .target-card {
       width: 49%;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px;
       .img-container {
         /* overflow: hidden;
         height: 0;
@@ -108,12 +108,13 @@ export default {
       .content-container {
         width: 100%;
         height:12.5vw;
-        background-color: red;
         display: flex;
         align-items:center;
         flex-direction: row;
+        background-color: white;
         .card-content {
           flex: 1;
+          margin-left: 10px;
         }
       }
       .target-card-img {
