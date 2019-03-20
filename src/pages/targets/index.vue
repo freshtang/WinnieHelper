@@ -13,7 +13,7 @@
             <text @click.stop="() => {}" :class="[item.lastCheck === curDate? 'icon-allright' : 'icon-right', 'iconfont', 'icon-normal']"></text>
           </navigator>
         </div>
-        <i-button type="primary" size="small">小尺寸</i-button>
+        <spin type="primary" size="small"></spin>
       </div>
       <div class="add-target">
         <button class="weui-btn" type="primary" plain="true" @click="toAddTarget">
@@ -29,6 +29,7 @@
 import { mapState, mapActions } from 'vuex'
 import { formatDate } from '@/utils'
 import card from '@/components/card'
+import spin from '@/components/spin'
 // import apis from '@/apis'
 
 export default {
@@ -40,7 +41,8 @@ export default {
   },
 
   components: {
-    card
+    card,
+    spin
   },
 
   computed: {
