@@ -1,6 +1,6 @@
 <template>
   <div class="main-warp">
-    <div class="target-list-wrap" >
+    <div class="target-list-wrap">
       <div class="target-header">
         <text class="target-title">全部目标</text>
       </div>
@@ -8,118 +8,109 @@
         <card :text="userInfo.nickName"></card>
       </div>
       <div class="kind-list__item">
-        <Calendar/>
+        <Calendar :value="value" :multi="true" :range="false" @select="select" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import { defaultTargetsLists } from '@/utils'
-import card from '@/components/card'
-import Calendar from 'mpvue-calendar'
-import 'mpvue-calendar/src/style.css'
+  import {
+    mapState,
+    mapActions
+  } from 'vuex'
+  import card from '@/components/card'
+  import Calendar from 'mpvue-calendar'
+  import { formatDate } from '@/utils'
+  import 'mpvue-calendar/src/style.css'
+  import apis from '@/apis'
 
-export default {
-  data () {
-    return {
-      defaultTargetsLists: defaultTargetsLists
-    }
-  },
+  // const year = new Date().getFullYear()
+  // const month = new Date().getMonth() + 1
 
-  components: {
-    card,
-    Calendar
-  },
+  export default {
+    data () {
+      return {
+        value: []
+      }
+    },
 
-  computed: {
-    ...mapState({
-      userInfo: state => state.userInfo
-    })
-  },
+    components: {
+      card,
+      Calendar
+    },
 
-  onLoad (options) {
-    console.log(options)
-  },
+    computed: {
+      ...mapState({
+        userInfo: state => state.userInfo
+      })
+    },
 
-  methods: {
-    ...mapActions({
-      addTarget: 'targets/addTarget'
-    }),
-    addSelectTarget (target) {
-      console.log(target)
-      this.addTarget(target)
-        .then(res => {
-          console.log(res)
+    onLoad (options) {
+      console.log(options)
+      apis.checkin.queryCheckin({
+        target_id: options.target_id
+      }).then(res => {
+        console.log(res)
+        this.value = res.result.data.map(item => {
+          return formatDate(new Date(item.time)).split('/').map(n => parseInt(n))
         })
-    }
-  },
+        console.log(this.value)
+      })
+    },
 
-  created () {
-    // let app = getApp()
+    methods: {
+      ...mapActions({
+        addTarget: 'targets/addTarget'
+      }),
+      addSelectTarget (target) {
+        console.log(target)
+        this.addTarget(target)
+          .then(res => {
+            console.log(res)
+          })
+      },
+      select (val, val2) {
+        console.log(val)
+        console.log(val2)
+        console.log(this.value)
+      }
+    },
+
+    created () {
+      // let app = getApp()
+    }
   }
-}
 </script>
 
 <style scoped lang=scss>
-@import '../../utils/styles/vars.sass';
-.main-warp {
-  box-sizing: border-box;
-  padding: 8px 8px;
-  height: 100%;
-  width: 100%;
-}
+  @import '../../utils/styles/vars.sass';
 
-.normal-icon{
-  font-size: 24px;
-  color: $primary-color;
-  padding-right: 10px;
-}
-
-.target-list-wrap {
-  height: 100%;
-  width: 100%;
-  .target-header {
-    margin-left: 10px;
-    margin-bottom: 10px;
-    .target-title {
-      font-size: $big-font-size;
-      font-weight: 500;
-    }
-  }
-  .target-list-content {
+  .main-warp {
+    box-sizing: border-box;
+    padding: 8px 8px;
+    height: 100%;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    .target-card {
-      width: 49%;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px;
-      .img-container {
-        /* overflow: hidden;
-        height: 0;
-        padding-bottom: 70%;  */
-        width: 100%;
-        height:32vw;
-      }
-      .content-container {
-        width: 100%;
-        height:17vw;
-        display: flex;
-        align-items:center;
-        flex-direction: row;
-        background-color: white;
-        .card-content {
-          flex: 1;
-          margin-left: 10px;
-        }
-      }
-      .target-card-img {
-        width: 100%;
-        height: 100%;
+  }
+
+  .normal-icon {
+    font-size: 24px;
+    color: $primary-color;
+    padding-right: 10px;
+  }
+
+  .target-list-wrap {
+    height: 100%;
+    width: 100%;
+
+    .target-header {
+      margin-left: 10px;
+      margin-bottom: 10px;
+
+      .target-title {
+        font-size: $big-font-size;
+        font-weight: 500;
       }
     }
   }
-}
-
 </style>

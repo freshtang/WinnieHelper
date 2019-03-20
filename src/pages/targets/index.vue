@@ -1,5 +1,6 @@
 <template>
   <div class="main-warp">
+    
     <div class="target-list-wrap" >
       <div class="target-list-content">
         <div class="weui-cells weui-cells_after-title">
@@ -12,6 +13,7 @@
             <text @click.stop="() => {}" :class="[item.lastCheck === curDate? 'icon-allright' : 'icon-right', 'iconfont', 'icon-normal']"></text>
           </navigator>
         </div>
+        <i-button type="primary" size="small">小尺寸</i-button>
       </div>
       <div class="add-target">
         <button class="weui-btn" type="primary" plain="true" @click="toAddTarget">
@@ -25,27 +27,14 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-// import { formatDate } from '@/utils'
+import { formatDate } from '@/utils'
 import card from '@/components/card'
-import apis from '@/apis'
+// import apis from '@/apis'
 
 export default {
   data () {
     return {
-      curDate: '2019-03-19',
-      // targetList: [{
-      //   name: '早起',
-      //   className: 'icon-sun',
-      //   punchDay: 3,
-      //   _openid: '1',
-      //   lastCheck: '2019-03-19'
-      // }, {
-      //   name: '吃早餐',
-      //   className: 'icon-eat',
-      //   punchDay: 3,
-      //   _openid: '2',
-      //   lastCheck: '2019-03-18'
-      // }],
+      curDate: formatDate(new Date()),
       motto: 'Hello miniprograme'
     }
   },
@@ -57,7 +46,9 @@ export default {
   computed: {
     ...mapState({
       userInfo: state => state.userInfo,
-      targetsLists: state => state.targets.targetsLists
+      targetsLists: state => state.targets.targetsLists.map(item => {
+        return {...item, lastCheck: formatDate(new Date(item.lastCheck))}
+      })
     })
   },
 
@@ -66,12 +57,13 @@ export default {
       loadTargets: 'targets/loadTargets'
     }),
     toAddTarget () {
-      // wx.navigateTo({url: '/pages/targetManage/main'})
-      apis.checkin.queryCheckin({
-        target_id: 'XJDSQXffS3SWK7Ud'
-      }).then(res => {
-        console.log(res)
-      })
+      wx.navigateTo({url: '/pages/targetManage/main'})
+      // apis.checkin.addCheckin({
+      //   target_id: 'XJDSQXffS3SWK7Ud',
+      //   time: new Date().toString()
+      // }).then(res => {
+      //   console.log(res)
+      // })
     }
   },
 

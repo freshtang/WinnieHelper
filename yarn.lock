@@ -113,6 +113,10 @@ acorn@^5.0.0, acorn@^5.3.0, acorn@^5.5.0:
   version "5.7.3"
   resolved "http://registry.npm.taobao.org/acorn/download/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
 
+acorn@^6.0.2:
+  version "6.1.1"
+  resolved "http://registry.npm.taobao.org/acorn/download/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
+
 ajv-errors@^1.0.0:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/ajv-errors/download/ajv-errors-1.0.1.tgz#f35986aceb91afadec4102fbd85014950cefa64d"
@@ -2283,6 +2287,10 @@ estraverse@^4.0.0, estraverse@^4.1.0, estraverse@^4.1.1:
   version "4.2.0"
   resolved "http://registry.npm.taobao.org/estraverse/download/estraverse-4.2.0.tgz#0dee3fed31fcd469618ce7342099fc1afa0bdb13"
 
+estree-walker@^0.5.2:
+  version "0.5.2"
+  resolved "http://registry.npm.taobao.org/estree-walker/download/estree-walker-0.5.2.tgz#d3850be7529c9580d815600b53126515e146dd39"
+
 esutils@^2.0.2:
   version "2.0.2"
   resolved "http://registry.npm.taobao.org/esutils/download/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
@@ -3005,6 +3013,21 @@ import-from@^2.1.0:
   resolved "http://registry.npm.taobao.org/import-from/download/import-from-2.1.0.tgz#335db7f2a7affd53aaa471d4b8021dee36b7f3b1"
   dependencies:
     resolve-from "^3.0.0"
+
+import-weapp-component@^4.7.3:
+  version "4.7.3"
+  resolved "http://registry.npm.taobao.org/import-weapp-component/download/import-weapp-component-4.7.3.tgz#6124c6f9ff52dacfc47a8350d4e6f1b6985bfac4"
+  dependencies:
+    acorn "^6.0.2"
+    cacache "^10.0.4"
+    estree-walker "^0.5.2"
+    find-cache-dir "^1.0.0"
+    globby "^7.1.1"
+    is-glob "^4.0.0"
+    loader-utils "^1.1.0"
+    minimatch "^3.0.4"
+    p-limit "^1.0.0"
+    serialize-javascript "^1.4.0"
 
 imurmurhash@^0.1.4:
   version "0.1.4"

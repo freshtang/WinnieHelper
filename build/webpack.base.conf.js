@@ -9,6 +9,7 @@ var MpvuePlugin = require('webpack-mpvue-asset-plugin')
 var glob = require('glob')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var relative = require('relative')
+var ImportComponent = require('import-weapp-component')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -112,6 +113,10 @@ let baseWebpackConfig = {
       'mpvuePlatform': 'global.mpvuePlatform'
     }),
     new MpvuePlugin(),
+    new ImportComponent({
+      src: path.resolve(__dirname, '../src'), // 引用组件或原生页面的目录
+      native: true // 将 src 目录中的原生 page 复制到 dist
+    }),
     new CopyWebpackPlugin([{
       from: '**/*.json',
       to: ''
