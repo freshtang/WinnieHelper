@@ -2,6 +2,7 @@
   "pages": [
     "pages/targets/main",
     "pages/targetManage/main",
+    "pages/targetDetail/main",
     "pages/index/main",
     "pages/counter/main"
   ],

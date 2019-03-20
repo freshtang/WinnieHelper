@@ -7,15 +7,10 @@ const db = cloud.database()
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-  return await db.collection('targets').add({
+  return await db.collection('checkin').add({
     data: {
-      targetId: event.targetId,
-      name: event.name,
-      punchDay: event.punchDay,
-      lastCheck: event.lastCheck,
-      className: event.className,
-      color: event.color,
-      desc: event.desc,
+      target_id: event.target_id,
+      time: event.time,
       _openid: wxContext.OPENID,
       _unionid: wxContext.UNIONID
     }

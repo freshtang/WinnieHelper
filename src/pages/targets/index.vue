@@ -3,13 +3,13 @@
     <div class="target-list-wrap" >
       <div class="target-list-content">
         <div class="weui-cells weui-cells_after-title">
-          <navigator :key="item._openid" v-for="item in targetsLists" url="/pages/targetManage/main" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <navigator :key="item._openid" v-for="item in targetsLists" :url="'/pages/targetDetail/main?target=' + item.name + '&_id=' + item._id + '&_openid=' + item._openid + '&desc=' + item.desc" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <text :class="[item.className, 'iconfont target-icon weui-cell__hd']"></text>
             <div class="weui-cell__bd content">
               <text class="content-text">{{item.name}}</text>
               <text class="punch-day-wrap content-text"> 已经打卡<text class="punch-day-content">{{item.punchDay}}</text>天</text>
             </div>
-            <text :class="[item.lastCheck === curDate? 'icon-allright' : 'icon-right', 'iconfont', 'icon-normal']"></text>
+            <text @click.stop="() => {}" :class="[item.lastCheck === curDate? 'icon-allright' : 'icon-right', 'iconfont', 'icon-normal']"></text>
           </navigator>
         </div>
       </div>
@@ -27,6 +27,7 @@
 import { mapState, mapActions } from 'vuex'
 // import { formatDate } from '@/utils'
 import card from '@/components/card'
+import apis from '@/apis'
 
 export default {
   data () {
@@ -65,7 +66,12 @@ export default {
       loadTargets: 'targets/loadTargets'
     }),
     toAddTarget () {
-      wx.navigateTo({url: '/pages/targetManage/main'})
+      // wx.navigateTo({url: '/pages/targetManage/main'})
+      apis.checkin.queryCheckin({
+        target_id: 'XJDSQXffS3SWK7Ud'
+      }).then(res => {
+        console.log(res)
+      })
     }
   },
 
