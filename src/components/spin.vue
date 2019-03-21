@@ -1,10 +1,11 @@
 <template>
   <view
-    :class="['i-class', 'i-spin', 'i-spin-${size}', fix ? 'i-spin-fix' : '', custom ? 'i-spin-show-text' : '', fullscreen ? 'i-spin-fullscreen' : '']">
+    :class="['i-class', 'i-spin', size === 'large' ? 'i-spin-large' : '', size === 'small' ? 'i-spin-small' : '', fix ? 'i-spin-fix' : '', custom ? 'i-spin-show-text' : '', fullscreen ? 'i-spin-fullscreen' : '']">
     <div class="i-spin-main">
       <view class="i-spin-dot"></view>
       <div class="i-spin-text">
         <!-- <slot></slot> -->
+        <div v-if="custom" class="loading"></div>
       </div>
     </div>
   </view>
@@ -34,18 +35,43 @@
   }
 </script>
 
-<style>
-  .i-spin {
-    color: #2d8cf0;
+<style scoped lang=scss>
+  @import '../utils/styles/vars.sass';
+
+  .center-loadding {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .i-spin-fixed {
+    position: relative;
+    color: $primary-color;
     vertical-align: middle;
     text-align: center
+  }
+
+  .loading {
+    display: inline-block;
+    margin-right: 12px;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-radius: 50%;
+    border: 2px solid $primary-color;
+    border-color: $primary-color $primary-color $primary-color transparent;
+    animation: loading-spin 0.6s linear;
+    animation-iteration-count: infinite;
   }
 
   .i-spin-dot {
     position: relative;
     display: block;
     border-radius: 50%;
-    background-color: #2d8cf0;
+    background-color: $primary-color;
     width: 20px;
     height: 20px;
     animation: ani-spin-bounce 1s 0s ease-in-out infinite
@@ -103,6 +129,16 @@
   .i-spin-show-text .i-spin-text {
     display: block;
     font-size: 14px
+  }
+
+  @keyframes loading-spin {
+    0% {
+      transform: rotate(0);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes ani-spin-bounce {

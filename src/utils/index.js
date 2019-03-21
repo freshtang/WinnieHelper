@@ -44,6 +44,14 @@ export const defaultTargetsLists = [{
   punchDay: 0,
   lastCheck: 0,
   desc: '你需要一顿健康的早餐来激发能量，让你的大脑正常运转。'
+}, {
+  targetId: 3,
+  name: '吃晚饭',
+  className: 'icon-eat',
+  color: 'primary',
+  punchDay: 0,
+  lastCheck: 0,
+  desc: '你需要一顿健康的晚饭来激发能量，让你的大脑正常运转。'
 }]
 
 export default {

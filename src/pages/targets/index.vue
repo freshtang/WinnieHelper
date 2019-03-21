@@ -3,7 +3,10 @@
     
     <div class="target-list-wrap" >
       <div class="target-list-content">
-        <div class="weui-cells weui-cells_after-title">
+        <spin v-if="isloading" fix custom>
+          <div class="loading"></div>
+        </spin>
+        <div v-if="!isloading" class="weui-cells weui-cells_after-title">
           <navigator :key="item._openid" v-for="item in targetsLists" :url="'/pages/targetDetail/main?target=' + item.name + '&_id=' + item._id + '&_openid=' + item._openid + '&desc=' + item.desc" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <text :class="[item.className, 'iconfont target-icon weui-cell__hd']"></text>
             <div class="weui-cell__bd content">
@@ -13,7 +16,6 @@
             <text @click.stop="() => {}" :class="[item.lastCheck === curDate? 'icon-allright' : 'icon-right', 'iconfont', 'icon-normal']"></text>
           </navigator>
         </div>
-        <spin type="primary" size="small"></spin>
       </div>
       <div class="add-target">
         <button class="weui-btn" type="primary" plain="true" @click="toAddTarget">
@@ -36,7 +38,7 @@ export default {
   data () {
     return {
       curDate: formatDate(new Date()),
-      motto: 'Hello miniprograme'
+      isloading: true
     }
   },
 
@@ -71,6 +73,10 @@ export default {
 
   created () {
     this.loadTargets()
+      .then(res => {
+        console.log(res)
+        this.isloading = false
+      })
     // let app = getApp()
   }
 }
@@ -94,8 +100,11 @@ export default {
 }
 
 .target-list-content {
+  position: relative;
   flex: 1;
 }
+
+
 
 .target-list-content .icon-normal{
   font-size: 24px;

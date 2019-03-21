@@ -21,8 +21,9 @@
   } from 'vuex'
   import card from '@/components/card'
   import Calendar from 'mpvue-calendar'
-  import { formatDate } from '@/utils'
   import 'mpvue-calendar/src/style.css'
+  import { formatDate } from '@/utils'
+  
   import apis from '@/apis'
 
   // const year = new Date().getFullYear()
@@ -83,7 +84,7 @@
   }
 </script>
 
-<style scoped lang=scss>
+<style lang=scss>
   @import '../../utils/styles/vars.sass';
 
   .main-warp {
@@ -91,26 +92,13 @@
     padding: 8px 8px;
     height: 100%;
     width: 100%;
-  }
-
-  .normal-icon {
-    font-size: 24px;
-    color: $primary-color;
-    padding-right: 10px;
-  }
-
-  .target-list-wrap {
-    height: 100%;
-    width: 100%;
-
-    .target-header {
-      margin-left: 10px;
-      margin-bottom: 10px;
-
-      .target-title {
-        font-size: $big-font-size;
-        font-weight: 500;
-      }
+    .mpvue-calendar ._td.selected ._span {
+      background-color: $primary-color;
     }
+    .mpvue-calendar ._td.selected ._span.mc-date-red {
+      background-color: $primary-color;
+    }
+
   }
+
 </style>
