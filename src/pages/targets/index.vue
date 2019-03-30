@@ -1,19 +1,28 @@
 <template>
-  <div class="main-warp">
-    
-    <div class="target-list-wrap" >
+  <div class="target-index main-warp">
+    <spin v-if="isloading" fix custom></spin>
+    <div class="target-list-wrap">
       <div class="target-list-content">
-        <spin v-if="isloading" fix custom>
-          <div class="loading"></div>
-        </spin>
         <div v-if="!isloading" class="weui-cells weui-cells_after-title">
-          <navigator :key="item._openid" v-for="item in targetsLists" :url="'/pages/targetDetail/main?target=' + item.name + '&_id=' + item._id + '&_openid=' + item._openid + '&desc=' + item.desc" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <navigator
+            :key="item._openid"
+            v-for="item in targetsLists"
+            :url="'/pages/targetDetail/main?name=' + item.name + '&target_id=' + item._id + '&lastCheck=' + item.lastCheckDate + '&_openid=' + item._openid + '&desc=' + item.desc"
+            class="weui-cell weui-cell_access"
+            hover-class="weui-cell_active"
+          >
             <text :class="[item.className, 'iconfont target-icon weui-cell__hd']"></text>
             <div class="weui-cell__bd content">
               <text class="content-text">{{item.name}}</text>
-              <text class="punch-day-wrap content-text"> 已经打卡<text class="punch-day-content">{{item.punchDay}}</text>天</text>
+              <text class="punch-day-wrap content-text">
+                已经打卡
+                <text class="punch-day-content">{{item.punchDay}}</text>天
+              </text>
             </div>
-            <text @click.stop="() => {}" :class="[item.lastCheck === curDate? 'icon-allright' : 'icon-right', 'iconfont', 'icon-normal']"></text>
+            <text
+              @click.stop="() => {}"
+              :class="[item.lastCheck === curDate? 'icon-allright' : 'icon-right', 'iconfont', 'icon-normal']"
+            ></text>
           </navigator>
         </div>
       </div>
@@ -50,9 +59,14 @@ export default {
   computed: {
     ...mapState({
       userInfo: state => state.userInfo,
-      targetsLists: state => state.targets.targetsLists.map(item => {
-        return {...item, lastCheck: formatDate(new Date(item.lastCheck))}
-      })
+      targetsLists: state =>
+        state.targets.targetsLists.map(item => {
+          return {
+            ...item,
+            lastCheckDate: item.lastCheck,
+            lastCheck: formatDate(new Date(item.lastCheck))
+          }
+        })
     })
   },
 
@@ -61,7 +75,7 @@ export default {
       loadTargets: 'targets/loadTargets'
     }),
     toAddTarget () {
-      wx.navigateTo({url: '/pages/targetManage/main'})
+      wx.navigateTo({ url: '/pages/targetAdd/main' })
       // apis.checkin.addCheckin({
       //   target_id: 'XJDSQXffS3SWK7Ud',
       //   time: new Date().toString()
@@ -72,136 +86,76 @@ export default {
   },
 
   created () {
-    this.loadTargets()
-      .then(res => {
-        console.log(res)
-        this.isloading = false
-      })
+    this.loadTargets().then(res => {
+      console.log(res)
+      this.isloading = false
+    })
     // let app = getApp()
   }
 }
 </script>
 
 <style scoped lang=scss>
-@import '../../utils/styles/vars.sass';
+@import "../../utils/styles/vars.sass";
 
 /* list */
-.main-warp {
+.main-warp.target-index {
   height: 100%;
   box-sizing: border-box;
   padding: 5px 7px;
+  background-color: #f8f8f8;
 }
 
 .target-list-wrap {
   height: 100%;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px;
   display: flex;
   flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px;
 }
 
 .target-list-content {
   position: relative;
   flex: 1;
-}
+  .icon-normal {
+    font-size: 24px;
+    color: $primary-color;
+  }
+  .target-icon {
+    margin-right: 25px;
+    font-size: 34px;
+    color: $primary-color;
+  }
+  .content {
+    padding: 5px 0;
+    flex-direction: column;
+    .punch-day-wrap {
+      color: grey;
+      font-size: 12px;
+    }
 
-
-
-.target-list-content .icon-normal{
-  font-size: 24px;
-  color: $primary-color;
-}
-.target-list-content .target-icon {
-  margin-right: 25px;
-  font-size: 34px;
-  color: $primary-color;
-}
-
-.target-list-content .content {
-  flex-direction: column;
-}
-
-.target-list-content .content .punch-day-wrap {
-  color: grey;
-  font-size: 12px;
-}
-
-.target-list-content .content .punch-day-content {
-  color: $primary-color;
-}
-
-.target-list-content .content .content-text {
-  display: block;
+    .punch-day-content {
+      color: $primary-color;
+    }
+    .content-text {
+      display: block;
+    }
+  }
 }
 
 .add-target {
   height: 50px;
-}
-
-.add-target .weui-btn {
-  color: $primary-color;
-  border:1px solid $primary-color;
-  width: 130px;
-  font-size: 14px;
-  border-radius: 14px;
-  line-height: 30px;
-  height: 30px;
-}
-
-.add-target .icon-winnie {
-  font-size: 20px;
-  margin-right: 5px;
-}
-
-/* native */
-
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
-
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
+  .weui-btn {
+    color: $primary-color;
+    border: 1px solid $primary-color;
+    width: 130px;
+    font-size: 14px;
+    border-radius: 14px;
+    line-height: 30px;
+    height: 30px;
+  }
+  .icon-winnie {
+    font-size: 20px;
+    margin-right: 5px;
+  }
 }
 </style>

@@ -2,6 +2,7 @@
   "pages": [
     "pages/targets/main",
     "pages/targetManage/main",
+    "pages/targetAdd/main",
     "pages/targetDetail/main",
     "pages/index/main",
     "pages/counter/main"
@@ -24,7 +25,7 @@
       "iconPath": "static/tabs/orders.png",
       "selectedIconPath": "static/tabs/orders-active.png"
     }, {
-      "text": "首页",
+      "text": "我的",
       "pagePath": "pages/index/main",
       "iconPath": "static/tabs/home.png",
       "selectedIconPath": "static/tabs/home-active.png"
@@ -36,7 +37,7 @@
       "iconPath": "static/tabs/orders.png",
       "selectedIconPath": "static/tabs/orders-active.png"
     }, {
-      "name": "首页",
+      "name": "我的",
       "pagePath": "pages/index/main",
       "icon": "static/tabs/home.png",
       "activeIcon": "static/tabs/home-active.png"

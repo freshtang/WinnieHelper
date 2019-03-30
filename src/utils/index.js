@@ -1,4 +1,4 @@
-function formatNumber (n) {
+export function formatNumber (n) {
   const str = n.toString()
   return str[1] ? str : `0${str}`
 }
@@ -35,7 +35,8 @@ export const defaultTargetsLists = [{
   color: 'primary',
   punchDay: 0,
   lastCheck: 0,
-  desc: '一日之计在于晨'
+  desc: '一日之计在于晨',
+  photo: 'wakeup.jpeg'
 }, {
   targetId: 2,
   name: '吃早餐',
@@ -43,15 +44,44 @@ export const defaultTargetsLists = [{
   color: 'primary',
   punchDay: 0,
   lastCheck: 0,
-  desc: '你需要一顿健康的早餐来激发能量，让你的大脑正常运转。'
+  desc: '你需要一顿健康的早餐来激发能量，让你的大脑正常运转。',
+  photo: 'eatting.jpeg'
 }, {
   targetId: 3,
-  name: '吃晚饭',
-  className: 'icon-eat',
+  name: '早睡',
+  className: 'icon-sleep',
   color: 'primary',
   punchDay: 0,
   lastCheck: 0,
-  desc: '你需要一顿健康的晚饭来激发能量，让你的大脑正常运转。'
+  desc: '早睡早起。',
+  photo: 'sleep.jpeg'
+}, {
+  targetId: 4,
+  name: '绿色出行',
+  className: 'icon-bicycle',
+  color: 'primary',
+  punchDay: 0,
+  lastCheck: 0,
+  desc: '绿色出行',
+  photo: 'bybus.jpeg'
+}, {
+  targetId: 5,
+  name: '健身',
+  className: 'icon-gym',
+  color: 'primary',
+  punchDay: 0,
+  lastCheck: 0,
+  desc: '健身',
+  photo: 'gym.jpeg'
+}, {
+  targetId: 6,
+  name: '读书',
+  className: 'icon-read',
+  color: 'primary',
+  punchDay: 0,
+  lastCheck: 0,
+  desc: '读书。',
+  photo: 'readding.jpeg'
 }]
 
 export default {

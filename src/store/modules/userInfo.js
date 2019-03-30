@@ -14,9 +14,11 @@ export default {
   actions: {
     async getUserInfo ({ commit }) {
       // async写法
-      await $wx.login()
-      const { userInfo } = await $wx.getUserInfo()
-      commit('SET_USER_INFO', userInfo)
+      const res = await $wx.getSetting()
+      if (res.authSetting['scope.userInfo']) {
+        const { userInfo } = await $wx.getUserInfo()
+        commit('SET_USER_INFO', userInfo)
+      }
     }
   }
 }

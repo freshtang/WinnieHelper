@@ -6,6 +6,14 @@ const addTarget = async (data) => {
   })
 }
 
+const delTarget = async (data) => {
+  console.log(data)
+  return await wx.cloud.callFunction({  // eslint-disable-line
+    name: 'delTarget',
+    data: data
+  })
+}
+
 const queryTargets = async (data) => {
   return await wx.cloud.callFunction({ // eslint-disable-line
     name: 'queryTargets',
@@ -15,5 +23,6 @@ const queryTargets = async (data) => {
 
 export default {
   addTarget,
-  queryTargets
+  queryTargets,
+  delTarget
 }

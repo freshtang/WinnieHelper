@@ -12,6 +12,7 @@
 	"compileType": "miniprogram",
 	"appid": "wx6ee0f56bce8c18c7",
 	"projectname": "vx_demo",
+	"libVersion": "2.6.2",
 	"condition": {
 		"search": {
 			"current": -1,

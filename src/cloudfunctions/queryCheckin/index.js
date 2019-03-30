@@ -10,7 +10,7 @@ const db = cloud.database()
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-  return await db.collection('checkin').where({
+  const res = await db.collection('checkin').where({
     _openid: wxContext.OPENID,
     target_id: event.target_id
   }).get().then(res => {
@@ -19,4 +19,6 @@ exports.main = async (event, context) => {
   }).catch(err => {
     console.log(err)
   })
+
+  return {...res, code: 200}
 }

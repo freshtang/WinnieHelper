@@ -20,20 +20,21 @@ export default {
   },
   actions: {
     async addTarget ({ commit, state }, params) {
-      console.log(params)
-      // 添加target
       const { result } = await apis.targets.addTarget(params)
-
+      if (result.code === 200) {
+        commit('SET_TARGET_INFO', {...state, targetsLists: result.data})
+        return true
+      } else {
+        return false
+      }
+    },
+    async delTarget ({ commit, state }, params) {
+      console.log(params)
+      const { result } = await apis.targets.delTarget(params)
       console.log(result)
-      if (result.errMsg === 'collection.add:ok') {
-        const { result } = await apis.targets.queryTargets()
-        console.log(result)
-        if (result.errMsg === 'collection.get:ok') {
-          commit('SET_TARGET_INFO', {...state, targetsLists: result.data})
-          return true
-        } else {
-          return false
-        }
+      if (result.code === 200) {
+        commit('SET_TARGET_INFO', {...state, targetsLists: result.data})
+        return true
       } else {
         return false
       }
@@ -41,7 +42,7 @@ export default {
     async loadTargets ({ commit, state }, params) {
       const { result } = await apis.targets.queryTargets()
       console.log(result)
-      if (result.errMsg === 'collection.get:ok') {
+      if (result.code === 200) {
         commit('SET_TARGET_INFO', {...state, targetsLists: result.data})
         return true
       } else {

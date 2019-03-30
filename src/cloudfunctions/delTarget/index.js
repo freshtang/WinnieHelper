@@ -6,20 +6,11 @@ const db = cloud.database()
 
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
+  await db.collection('targets').doc(event._id).remove()
 
-  await db.collection('targets').add({
-    data: {
-      targetId: event.targetId,
-      name: event.name,
-      punchDay: event.punchDay,
-      lastCheck: event.lastCheck,
-      className: event.className,
-      color: event.color,
-      desc: event.desc,
-      _openid: wxContext.OPENID,
-      _unionid: wxContext.UNIONID
-    }
-  })
+  await db.collection('checkin').where({
+    target_id: event._id
+  }).remove()
 
   const res = await db.collection('targets').where({
     _openid: wxContext.OPENID

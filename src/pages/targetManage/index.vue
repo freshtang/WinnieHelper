@@ -3,11 +3,15 @@
     <div class="target-list-wrap" >
       <div class="target-header">
         <text class="target-title">全部目标</text>
+        <navigator class="target-manage">管理目标</navigator>
       </div>
       <div class="target-list-content">
           <navigator :key="item._openid" v-for="(item, index) in defaultTargetsLists" class="target-card">
             <!-- <text :class="[item.className, 'iconfont target-icon weui-cell__hd']"></text> -->
             <div class="img-container">
+              <div v-if="ifAdd[index]" class="full-model">
+                <text class="iconfont icon-nike"></text>
+              </div>
               <img class="target-card-img" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl"/>
             </div>
             <div class="content-container">
@@ -47,8 +51,6 @@ export default {
       })
       return res
     })
-    console.log(this.targetsLists)
-    console.log(this.ifAdd)
   },
 
   computed: {
@@ -61,14 +63,7 @@ export default {
   methods: {
     ...mapActions({
       addTarget: 'targets/addTarget'
-    }),
-    addSelectTarget (target) {
-      console.log(target)
-      this.addTarget(target)
-        .then(res => {
-          console.log(res)
-        })
-    }
+    })
   },
 
   created () {
@@ -79,63 +74,6 @@ export default {
 
 <style scoped lang=scss>
 @import '../../utils/styles/vars.sass';
-.main-warp {
-  box-sizing: border-box;
-  padding: 8px 8px;
-  height: 100%;
-  width: 100%;
-}
 
-.normal-icon{
-  font-size: 24px;
-  color: $primary-color;
-  padding-right: 10px;
-}
-
-.target-list-wrap {
-  height: 100%;
-  width: 100%;
-  .target-header {
-    margin-left: 10px;
-    margin-bottom: 10px;
-    .target-title {
-      font-size: $big-font-size;
-      font-weight: 500;
-    }
-  }
-  .target-list-content {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap:wrap;
-    .target-card {
-      width: 49%;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px;
-      .img-container {
-        /* overflow: hidden;
-        height: 0;
-        padding-bottom: 70%;  */
-        width: 100%;
-        height:32vw;
-      }
-      .content-container {
-        width: 100%;
-        height:17vw;
-        display: flex;
-        align-items:center;
-        flex-direction: row;
-        background-color: white;
-        .card-content {
-          flex: 1;
-          margin-left: 10px;
-        }
-      }
-      .target-card-img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-}
 
 </style>

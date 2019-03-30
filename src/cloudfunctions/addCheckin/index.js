@@ -17,10 +17,22 @@ exports.main = async (event, context) => {
     }
   })
 
-  return await db.collection('targets').doc(event.target_id).update({
+  await db.collection('targets').doc(event.target_id).update({
     data: {
       punchDay: _.inc(1),
       lastCheck: event.time
     }
   })
+
+  const res = await db.collection('checkin').where({
+    _openid: wxContext.OPENID,
+    target_id: event.target_id
+  }).get().then(res => {
+    console.log(res)
+    return res
+  }).catch(err => {
+    console.log(err)
+  })
+
+  return {...res, code: 200}
 }

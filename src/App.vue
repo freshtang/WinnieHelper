@@ -1,7 +1,7 @@
 <script>
 import { mapActions } from 'vuex'
 
-import 'mp-weui/lib/style.css'
+import 'mpvue-weui/src/style/weui.css'
 
 export default {
   methods: {
@@ -11,6 +11,7 @@ export default {
   },
   created () {
     this.getUserInfo()
+    console.log('getUserInfo')
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -59,11 +60,58 @@ font color #888
 
 .page, body, .main-warp{
   height: 100%;
-  background-color: #f8f8f8;
+  background-color: white;
+  position: relative;
 }
+
 .weui-btn {
   color: $primary-color;
   border:1px solid $primary-color;
+}
+
+button[type=primary] {
+  background-color: $primary-color;
+}
+.button-hover[type=primary] {
+  color:rgba(255, 255, 255, 0.6);
+  background-color: $primary-color;
+}
+.circle-button {
+  width: 70px;
+  height: 70px;
+  border: 3px solid white;
+  background-color: transparent;
+  text-align: center;
+  line-height: 70px;
+  color:white;
+  padding-left: -20px;
+  padding-right: -20px;
+  border-radius: 50%;
+}
+
+
+.normal-text {
+  font-size: 14px;
+}
+
+.small-text {
+  font-size: 12px;
+}
+
+.big-text {
+  font-size: 18px;
+}
+
+.grey-text {
+  color: grey;
+}
+
+.grey-line {
+  border-bottom: 1px solid #e1e4e8!important;
+  height: 1px;
+  width: 100%;
+  margin: 8px 0;
+  box-sizing: border-box;
 }
 
 .container {
