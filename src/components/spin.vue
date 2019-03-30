@@ -88,7 +88,7 @@
   }
 
   .i-spin-fix {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 8;
@@ -110,7 +110,7 @@
   }
 
   .i-spin-fix .i-spin-main {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);

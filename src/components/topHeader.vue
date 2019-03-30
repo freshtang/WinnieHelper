@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-top-header">
+  <div :class="['custom-top-header', transparent ? 'transparent' : '']">
     <div class="icon-wrap" @click="pageNavigation">
       <img class="back-icon" v-if="back" src="/static/images/back.png" />
       <img v-if="isIndex" src="/static/images/setting.png" />
@@ -23,7 +23,12 @@
 
       title: {
         type: 'string',
-        default: 'Trending'
+        default: ''
+      },
+
+      transparent: {
+        type: Boolean,
+        default: false
       }
     },
 
@@ -63,6 +68,10 @@
     background: #fff;
   }
 
+  .transparent.custom-top-header {
+    background-color: transparent;
+  }
+
   .icon-wrap {
     position: absolute;
     width: 45rpx;
@@ -71,13 +80,13 @@
     text-align: center;
 
     img {
-      width: 32rpx;
-      height: 32rpx;
+      width: 40rpx;
+      height: 40rpx;
       margin-top: 5rpx;
 
       &.back-icon {
-        width: 35rpx;
-        height: 35rpx;
+        width: 40rpx;
+        height: 40rpx;
       }
     }
   }
@@ -85,7 +94,7 @@
   .page-title {
     flex: 1;
     text-align: center;
-    font-weight: bold;
+    font-weight: 500;
     color: #000
   }
 

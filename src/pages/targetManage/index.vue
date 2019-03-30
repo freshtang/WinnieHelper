@@ -1,5 +1,7 @@
 <template>
   <div class="main-warp">
+    <top-header :isIndex="true"></top-header>
+    <div style="margin-top: 60px; width:1px; height: 1px;"></div>
     <div class="target-list-wrap" >
       <div class="target-header">
         <text class="target-title">全部目标</text>
@@ -28,6 +30,7 @@
 import { mapState, mapActions } from 'vuex'
 import { defaultTargetsLists } from '@/utils'
 import card from '@/components/card'
+import topHeader from '@/components/topHeader'
 
 export default {
   data () {
@@ -38,7 +41,8 @@ export default {
   },
 
   components: {
-    card
+    card,
+    topHeader
   },
 
   onLoad () {

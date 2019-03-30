@@ -1,5 +1,7 @@
 <template>
   <div class="main-warp">
+    <top-header :back="true"></top-header>
+    <div style="margin-top: 60px; width:1px; height: 1px;"></div>
     <message :type="messageType" v-model="isShowMessage" :content="messageContent"></message>
     <spin v-if="isloading" fix custom></spin>
     <div class="target-list-wrap" >
@@ -14,7 +16,7 @@
               <div v-if="ifAdd[index]" class="full-model">
                 <text class="iconfont icon-nike"></text>
               </div>
-              <img class="target-card-img" v-if="item.photo" :src="'../../utils/photos/' + item.photo"/>
+              <img class="target-card-img" v-if="item.photo" :src="'/static/images/' + item.photo"/>
             </div>
             <div class="content-container">
               <text class="card-content">{{item.name}}</text>
@@ -30,6 +32,7 @@
 import { mapState, mapActions } from 'vuex'
 import { defaultTargetsLists } from '@/utils'
 import spin from '@/components/spin'
+import topHeader from '@/components/topHeader'
 import message from '@/components/message'
 
 export default {
@@ -46,7 +49,8 @@ export default {
 
   components: {
     spin,
-    message
+    message,
+    topHeader
   },
 
   onLoad () {

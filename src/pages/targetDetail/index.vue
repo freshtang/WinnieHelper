@@ -1,45 +1,52 @@
 <template>
-  <div class="main-warp">
+  <div :class="['main-warp', 'target-detail', showBackground ? 'showBackground' : '']">
+    <top-header transparent back></top-header>
     <spin v-if="isloading" fix custom></spin>
-    <div class="larger-header">
-      <div class="checkin-wrap">
-        <button v-if="!isCheckToday" @click="addCheckin" class="circle-button">
-          <text style="margin-left: -20px;margin-right:-20px;">打卡</text>
-        </button>
-        <div v-if="isCheckToday" class="check-in-time">
-          <text class="big-text">{{checkTime}}</text>
-          <text class="small-text">今天打卡时间</text>
+    <div v-if="showBackground"  class="background-page">
+      <img class="target-background" src="/static/images/winner_sleep.png" background-size="cover" />
+    </div>
+    <div v-else>
+      <div class="larger-header">
+        <div class="checkin-wrap">
+          <button v-if="!isCheckToday" @click="addCheckin" class="circle-button">
+            <text style="margin-left: -20px;margin-right:-20px;">打卡</text>
+          </button>
+          <div v-if="isCheckToday" class="check-in-time">
+            <text class="big-text">{{checkTime}}</text>
+            <text class="small-text">今天打卡时间</text>
+          </div>
+        </div>
+      </div>
+      <div class="larger-header-content-warp">
+        <div class="target-list-wrap">
+          <div class="date-count kind-list__item">
+            <div class="target-desc">
+              <text class="target-desc-symbol">“</text>
+              <text class="normal-text">{{options.desc}}</text>
+              <text class="target-desc-symbol">”</text>
+            </div>
+            <div class="grey-line"></div>
+            <div class="data-count-card-wrap">
+              <div class="data-count-card">
+                <text>{{value.length}}</text>
+                <text class="grey-text small-text">累计打卡天数</text>
+              </div>
+              <div class="data-count-card">
+                <text>{{monthCheckin}}</text>
+                <text class="grey-text small-text">本月打卡天数</text>
+              </div>
+            </div>
+          </div>
+          <div class="kind-list__item">
+            <Calendar :value="value" :multi="true" :range="false" @select="select" />
+          </div>
+          <div class="kind-list__item">
+            <button @click="handleClickDel()" class="weui-btn del-btn" type="primary">删除此目标</button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="larger-header-content-warp">
-      <div class="target-list-wrap">
-        <div class="date-count kind-list__item">
-          <div class="target-desc">
-            <text class="target-desc-symbol">“</text>
-            <text class="normal-text">{{options.desc}}</text>
-            <text class="target-desc-symbol">”</text>
-          </div>
-          <div class="grey-line"></div>
-          <div class="data-count-card-wrap">
-            <div class="data-count-card">
-              <text>{{value.length}}</text>
-              <text class="grey-text small-text">累计打卡天数</text>
-            </div>
-            <div class="data-count-card">
-              <text>{{monthCheckin}}</text>
-              <text class="grey-text small-text">本月打卡天数</text>
-            </div>
-          </div>
-        </div>
-        <div class="kind-list__item">
-          <Calendar :value="value" :multi="true" :range="false" @select="select" />
-        </div>
-        <div class="kind-list__item">
-          <button @click="handleClickDel()" class="weui-btn del-btn" type="primary">删除此目标</button>
-        </div>
-      </div>
-    </div>
+
 
     <mp-modal ref="mpModal" title="注意" :content="'是否确定删除 ' + options.name + ' 目标'" :showCancel="true" @confirm="confirmDelTarget" confirmText="删除" :confirmColor="primaryColor" @cancel="cancel"></mp-modal>
   </div>
@@ -55,6 +62,7 @@
   import 'mpvue-calendar/src/style.css'
   import { formatDate, formatNumber } from '@/utils'
   import spin from '@/components/spin'
+  import topHeader from '@/components/topHeader'
   
   import apis from '@/apis'
 
@@ -70,17 +78,20 @@
           name: '',
           _id: '',
           desc: '',
-          lastCheck: '1'
+          lastCheck: '1',
+          target_id: ''
         },
         primaryColor: '#ffc200',
-        isloading: false
+        isloading: false,
+        showBackground: false
       }
     },
 
     components: {
       mpModal,
       Calendar,
-      spin
+      spin,
+      topHeader
     },
 
     computed: {
@@ -102,9 +113,12 @@
     onLoad (options) {
       console.log(options)
       this.options = options
-      this.isloading = true
+      this.showBackground = options.target_id !== 0
+      if (!this.showBackground) {
+        this.isloading = true
+      }
       apis.checkin.queryCheckin({
-        target_id: options.target_id
+        target_id: options._id
       }).then(res => {
         this.value = res.result.data.map(item => {
           return formatDate(new Date(item.time)).split('/').map(n => parseInt(n))
@@ -122,7 +136,7 @@
       confirmDelTarget (res) {
         this.isloading = true
         if (res.confirm) {
-          this.delTarget({_id: this.options.target_id})
+          this.delTarget({_id: this.options._id})
             .then(res => {
               console.log(res)
               this.isloading = false
@@ -141,7 +155,7 @@
       addCheckin () {
         this.isloading = true
         apis.checkin.addCheckin({
-          target_id: this.options.target_id,
+          target_id: this.options._id,
           time: new Date().toString()
         }).then(res => {
           this.isloading = false
@@ -163,11 +177,25 @@
 
 <style lang=scss>
   @import '../../utils/styles/vars.sass';
-
+  .showBackground.main-warp.target-detail {
+    overflow: hidden;
+  }
+  .main-warp.target-detail {
+    display: block;
+  }
   .kind-list__item {
     background-color: white;
     margin-bottom: 12px;
     padding: 8px 12px;
+  }
+
+  .background-page {
+    height: 100%;
+    width: 100%;
+    .target-background {
+      height: 100%;
+      width: 100%;
+    }
   }
 
   .date-count {
@@ -204,14 +232,14 @@
   }
 
   .larger-header {
-    height:46vw;
+    height:56vw;
     background-color: $primary-color;
     box-sizing: border-box;
     padding-bottom: 40px;
     display: flex;
     .checkin-wrap {
       margin-left: 25px;
-      margin-top: 30px;
+      margin-top: 60px;
       .check-in-time {
         color: white;
         font-weight: 600;
